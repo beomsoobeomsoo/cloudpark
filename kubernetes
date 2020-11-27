@@ -27,7 +27,14 @@ Run 'kubectl get nodes' to see this node join the cluster.
 	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config
   
-  
+////////////////////////////////////////////////////////////////////////////////
+번외 
+kubeadm token create --print-join-command  값을 수동으로 가져와보자
+token :   kubeadm token list
+ --discovery-token-ca-cert-hash:   openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+결과값으로 만들면 된다 
+kubeadm join   [IP:PORT]  token [result: kubeadm token list]  --discovery-token-ca-cert-hash [result: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //']
+결론적으로: kubeadm token create --print-join-command 동일하다
 
 
 
