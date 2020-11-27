@@ -1,0 +1,33 @@
+ 쿠버네티스  join kubernetes join  
+ 
+1. 워커노드 일때
+마스터:$ kubeadm token create --print-join-command
+결과 값//  kubeadm join 220.xxx.xxx.xxx--token 1232m38.dfdaaerewn8p     --discovery-token-ca-cert-hash sha256:cloudparkkubeomsoo123ok 
+//결과 값을 X라 하면 그대로 복사해 워커노드에 저장
+워커노드:$ kubeadm join 220.xxx.xxx.xxx--token 1232m38.dfdaaerewn8p     --discovery-token-ca-cert-hash sha256:cloudparkkubeomsoo123ok
+
+
+2. 마스터 다중으로 구성시 서브마스터 일때
+마스터:$ kubeadm token create --print-join-command
+결과 값//  kubeadm join 220.xxx.xxx.xxx--token 1232m38.dfdaaerewn8p     --discovery-token-ca-cert-hash sha256:cloudparkkubeomsoo123ok 
+// 결과 값에  +  --control-plane --certificate-key    [ certificate-key값]
+certificate-key값 구하는 방법 
+마스터:$ kubeadm init phase upload-certs --upload-certs
+결과값// ejejdjdiufewhw123
+서브마스터: kubeadm join 220.xxx.xxx.xxx--token 1232m38.dfdaaerewn8p     --discovery-token-ca-cert-hash sha256:cloudparkkubeomsoo123ok --control-plane --certificate-key ejejdjdiufewhw123
+
+
+
+둘 결과값은 
+Run 'kubectl get nodes' to see this node join the cluster.
+로 나오며  서브마스터일 경우 
+서브마스터에  추가 명령어를 수행하라고 표시된다
+
+	mkdir -p $HOME/.kube
+	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  
+  
+
+
+
